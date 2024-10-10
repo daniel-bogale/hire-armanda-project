@@ -39,7 +39,7 @@ const signUpFormSchema = z.object({
 type signUpFormInputs = z.infer<typeof signUpFormSchema>;
 
 
-export function SignUpForm() {
+export function RegisterPage() {
     const form = useForm<z.infer<typeof signUpFormSchema>>({
         resolver: zodResolver(signUpFormSchema),
         defaultValues: {

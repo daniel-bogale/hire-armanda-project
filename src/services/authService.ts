@@ -1,11 +1,8 @@
-// src/services/authService.ts
 import axios from "axios";
 import { UserData, Credentials } from "../types/auth";
-import { AuthResponse, ImageUploadResponse, Image } from "../types/api";
+import { AuthResponse } from "../types/api";
+import { API_URL } from "@/config";
 
-const API_URL = "http://localhost:8000"; // Adjust this to your backend's URL
-
-// Register a new user
 export const register = async (userData: UserData): Promise<AuthResponse> => {
   const response = await axios.post<AuthResponse>(
     `${API_URL}/auth/register`,
@@ -14,7 +11,6 @@ export const register = async (userData: UserData): Promise<AuthResponse> => {
   return response.data;
 };
 
-// Login a user
 export const login = async (
   credentials: Credentials
 ): Promise<AuthResponse> => {
@@ -25,30 +21,10 @@ export const login = async (
   return response.data;
 };
 
-// Upload an image
-export const uploadImage = async (
-  imageData: FormData,
-  token: string
-): Promise<ImageUploadResponse> => {
-  const response = await axios.post<ImageUploadResponse>(
-    `${API_URL}/images/upload`,
-    imageData,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
+export const logout = async () => {
+  await axios.post(`${API_URL}/auth/logout`);
 };
 
-// Fetch all images for the logged-in user
-export const fetchImages = async (token: string): Promise<Image[]> => {
-  const response = await axios.get<Image[]>(`${API_URL}/images`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return response.data;
+export const deleteAccount = async () => {
+  await axios.post(`${API_URL}/auth/delete`);
 };

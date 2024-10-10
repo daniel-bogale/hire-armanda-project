@@ -7,13 +7,18 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './routes/error/ErrorPage.tsx';
-import { LoginForm } from './routes/auth/login.tsx';
-import { SignUpForm } from './routes/auth/register.tsx';
+import { LoginPage } from './routes/auth/login.tsx';
+import { RegisterPage } from './routes/auth/register.tsx';
 import { ThemeProvider } from './components/theme-provider.tsx';
 import LandingPage from './routes/landing-page/index.tsx';
-import DefaultLayout from './components/default-layout.tsx';
 import PublicView from './routes/PublicView.tsx';
 import { ForgotPassword } from './routes/auth/forgot-password.tsx';
+import ProtectedView from './routes/ProtectedView.tsx';
+import MainDashboardLayout from './components/layout/main-layout.tsx';
+import MainDashboard from './routes/dashboard/index.tsx';
+import DefaultLayout from './components/layout/default-layout.tsx';
+import { TooltipProvider } from './components/ui/tooltip.tsx';
+import Setting from './routes/setting/setting.tsx';
 
 const router = createBrowserRouter([
   {
@@ -32,44 +37,47 @@ const router = createBrowserRouter([
               },
               {
                 path: '/login',
-                element: <LoginForm />
+                element: <LoginPage />
               },
               {
                 path: "/register",
-                element: <SignUpForm />
+                element: <RegisterPage />
               },
               {
                 path: "/forgot-password",
                 element: <ForgotPassword />
-
               }
 
             ]
           }
         ]
       },
-      // {
-      //   element: <ProtectedView />,
-      //   children: [
-      //     {
-      //       children: [
-      //         {
-      //           element: <MainDashboardLayout />,
-      //           children: [
-      //             {
-      //               path: "/dashboard",
-      //               element: <Dashboard />
-      //             },
-      //             {
-      //               path: '/setting',
-      //               element: <Setting />,
-      //             },
-      //           ]
-      //         }
-      //       ]
-      //     }
-      //   ]
-      // }
+      {
+        element: <ProtectedView />,
+        children: [
+          {
+            children: [
+              {
+                element: <MainDashboardLayout />,
+                children: [
+                  {
+                    path: "/dashboard",
+                    element: <MainDashboard />
+                  },
+                  {
+                    path: '/setting',
+                    element: <Setting />,
+                  },
+                  {
+                    path: "/about",
+                    element: <div>About</div>
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 
@@ -78,7 +86,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
+      <TooltipProvider>
+
+        <RouterProvider router={router} />
+      </TooltipProvider>
+
     </ThemeProvider>
   </StrictMode>,
 )

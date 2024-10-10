@@ -4,7 +4,7 @@ import Hero from "@/components/hero";
 
 const LandingPage = () => {
     return (
-        <main>
+        <main className="container mx-auto ">
             <Hero />
             <Features />
         </main>

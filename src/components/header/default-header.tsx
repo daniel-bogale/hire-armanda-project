@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { ModeToggle } from './mode-toggle';
+import { Button } from '../ui/button';
+import { ModeToggle } from '../mode-toggle';
 
 const Header = () => {
     return (
         <div className=' bg-white dark:bg-gray-900 shadow-md'>
-            <header className="container flex justify-between items-center py-4 px-8 mx-auto ">
+            <header className="container flex justify-between items-center py-4 px-6 mx-auto ">
                 <Link to="/">
                     <h1 className="text-xl font-bold text-gray-900 dark:text-white">Armand Bucket</h1>
                 </Link>

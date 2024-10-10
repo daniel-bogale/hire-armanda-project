@@ -32,7 +32,7 @@ const loginFormSchema = z.object({
 type LoginFormInputs = z.infer<typeof loginFormSchema>;
 
 
-export function LoginForm() {
+export function LoginPage() {
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
