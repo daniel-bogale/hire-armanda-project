@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { setUser, useAppState } from '@/state';
 import { logout } from '@/services/authService';
@@ -28,7 +28,10 @@ const MainHeader = () => {
 
 
     };
+    const { pathname } = useLocation()
     const navigate = useNavigate()
+    console.log("pathname", pathname === "/dashboard", pathname)
+
 
     return (
         <div className='bg-white dark:bg-gray-900 shadow-md'>
@@ -41,22 +44,23 @@ const MainHeader = () => {
 
                     <Link
                         to="/dashboard"
-                        className="text-foreground transition-colors hover:text-foreground"
+                        className={`${pathname === "/dashboard" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
                     >
                         Media Library
                     </Link>
                     <Link
                         to="/about"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className={`${pathname === "/about" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
                     >
                         About
                     </Link>
                     <Link
                         to="/setting"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        className={`${pathname === "/setting" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
                     >
                         Setting
                     </Link>
+
                 </div>
                 <div className='md:hidden'>
                     <aside className="fixed inset-y-0 left-0 z-10 w-14 flex-col border-r bg-background flex">

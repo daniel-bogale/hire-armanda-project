@@ -32,7 +32,7 @@ const MainDashboard = ({ }: Props) => {
                     />
                 </ResizablePanel>
                 <ResizableHandle withHandle />
-                <ResizablePanel defaultSize={80} minSize={70} maxSize={85}>
+                <ResizablePanel defaultSize={80} minSize={60} maxSize={85}>
                     <MainMedia path={path} />
                 </ResizablePanel>
             </ResizablePanelGroup>
