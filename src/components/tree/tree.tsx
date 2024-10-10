@@ -5,6 +5,7 @@ import useResizeObserver from "use-resize-observer";
 import { cn } from "@/lib/utils";
 
 import { ScrollArea } from "../ui/scroll-area";
+import { FolderDialog } from "@/routes/project/modal";
 
 interface TreeDataItem {
     id: string;
@@ -149,6 +150,8 @@ const TreeItem = React.forwardRef<
                                             FolderIcon={FolderIcon}
                                             ItemIcon={ItemIcon}
                                         />
+                                        <FolderDialog path={item.path} />
+
                                     </AccordionContent>
                                 </AccordionPrimitive.Item>
                             </AccordionPrimitive.Root>
