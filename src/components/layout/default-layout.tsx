@@ -5,7 +5,7 @@ import Footer from "../footer";
 const DefaultLayout = () => {
     return (
         <div className="relative">
-            <div className="min-h-[92.45vh]">
+            <div className="min-h-[92vh]">
                 <Header />
                 <Outlet />
             </div>

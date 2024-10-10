@@ -12,7 +12,6 @@ export default function ErrorPage() {
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>{error.status === 404 ? "Error 404" : "Error"}</AlertTitle>
                 <AlertDescription>
-
                     {error.status === 404 ? "Sorry, the page you are looking for does not exist." : ""}
                 </AlertDescription>
             </Alert>
