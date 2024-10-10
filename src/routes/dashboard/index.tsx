@@ -1,53 +1,41 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Link } from "react-router-dom"
 import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
+import MainMedia from "./media"
+import { Tree } from "@/components/tree/tree"
+import { data } from "./data"
+import { Folder } from "lucide-react"
+import { useState } from "react"
 
 type Props = {}
 
 const MainDashboard = ({ }: Props) => {
+    const [content, setContent] = useState("Admin Page")
+
     return (
-        <div className=" flex gap-4 py-6 h-full px-4">
+        <div className=" flex gap-4 py-10 px-4">
             <ResizablePanelGroup
                 direction="horizontal"
-                className="min-h-[84vh]  rounded-lg border md:min-w-[450px]"
+                className="min-h-[76vh] rounded-lg border mx-8"
             >
                 <ResizablePanel defaultSize={25}>
-                    <div className="flex h-full items-center justify-center p-6">
-                        <span className="font-semibold">Sidebar</span>
-                    </div>
+                    <Tree
+                        data={data}
+                        className="flex-shrink-0 border-[1px] h-full p-4"
+                        initialSlelectedItemId="f12"
+                        onSelectChange={(item) => setContent(item?.name ?? "")}
+                        folderIcon={Folder}
+                        itemIcon={Folder}
+                    />
                 </ResizablePanel>
                 <ResizableHandle />
-                <ResizablePanel defaultSize={75}>
-                    <Breadcrumb className="hidden md:flex">
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="/dashboard">Dashboard</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="#">Folder 1</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Folder b</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+                <ResizablePanel defaultSize={80} minSize={75} maxSize={85}>
+                    <MainMedia content={content} />
                 </ResizablePanel>
             </ResizablePanelGroup>
-
-
-
-
-        </div>
+        </div >
     )
 }
 

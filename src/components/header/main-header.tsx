@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { setUser, useAppState } from '@/state';
 import { logout } from '@/services/authService';
@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Images, Package2, ScrollText, Settings } from 'lucide-react';
 import { ModeToggle } from '../mode-toggle';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 const MainHeader = () => {
     const { dispatch } = useAppState();
     const { toast } = useToast()
@@ -27,6 +28,7 @@ const MainHeader = () => {
 
 
     };
+    const navigate = useNavigate()
 
     return (
         <div className='bg-white dark:bg-gray-900 shadow-md'>
@@ -112,6 +114,38 @@ const MainHeader = () => {
                         <Button variant="link" className=" text-gray-900 dark:text-gray-300">Log out</Button>
                     </Link>
                     <ModeToggle />
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="overflow-hidden rounded-full"
+                            >
+                                <img
+                                    src="/placeholder-user.jpg"
+                                    width={36}
+                                    height={36}
+                                    alt="Avatar"
+                                    className="overflow-hidden rounded-full"
+                                />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={
+                                    () => navigate('/setting')
+                                }>Settings</DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => navigate('/about')}
+                            >About</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={handleLogout}
+                            >Logout</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </nav>
             </header >
 

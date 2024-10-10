@@ -24,7 +24,7 @@ const formSchema = z.object({
         .email("Please enter a valid email address.")
 })
 
-type fromInputs = z.infer<typeof formSchema>;
+export type fromInputs = z.infer<typeof formSchema>;
 
 
 export function ForgotPassword() {

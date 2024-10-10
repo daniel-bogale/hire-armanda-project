@@ -19,6 +19,7 @@ import MainDashboard from './routes/dashboard/index.tsx';
 import DefaultLayout from './components/layout/default-layout.tsx';
 import { TooltipProvider } from './components/ui/tooltip.tsx';
 import Setting from './routes/setting/setting.tsx';
+import About from './routes/about.tsx';
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
                   },
                   {
                     path: "/about",
-                    element: <div>About</div>
+                    element: <About />
                   }
                 ]
               }

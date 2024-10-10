@@ -53,7 +53,7 @@ const Setting = ({ }: Props) => {
         <CardHeader>
           <CardTitle className="text-xl">Setting</CardTitle>
           <CardDescription>
-            Manage your account settings
+            Manage your account settings below.
           </CardDescription>
         </CardHeader>
         <CardContent>

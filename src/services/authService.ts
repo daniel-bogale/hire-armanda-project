@@ -1,9 +1,12 @@
 import axios from "axios";
-import { UserData, Credentials } from "../types/auth";
 import { AuthResponse } from "../types/api";
 import { API_URL } from "@/config";
+import { signUpFormInputs } from "@/routes/auth/register";
+import { fromInputs } from "@/routes/auth/forgot-password";
 
-export const register = async (userData: UserData): Promise<AuthResponse> => {
+export const register = async (
+  userData: signUpFormInputs
+): Promise<AuthResponse> => {
   const response = await axios.post<AuthResponse>(
     `${API_URL}/auth/register`,
     userData
@@ -11,9 +14,7 @@ export const register = async (userData: UserData): Promise<AuthResponse> => {
   return response.data;
 };
 
-export const login = async (
-  credentials: Credentials
-): Promise<AuthResponse> => {
+export const login = async (credentials: fromInputs): Promise<AuthResponse> => {
   const response = await axios.post<AuthResponse>(
     `${API_URL}/auth/login`,
     credentials

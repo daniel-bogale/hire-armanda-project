@@ -36,7 +36,7 @@ const signUpFormSchema = z.object({
     )
 })
 
-type signUpFormInputs = z.infer<typeof signUpFormSchema>;
+export type signUpFormInputs = z.infer<typeof signUpFormSchema>;
 
 
 export function RegisterPage() {

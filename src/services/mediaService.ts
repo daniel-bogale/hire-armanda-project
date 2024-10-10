@@ -1,4 +1,6 @@
-import { AuthResponse, ImageUploadResponse, Image } from "../types/api";
+import { API_URL } from "@/config";
+import { ImageUploadResponse, Image } from "../types/api";
+import axios from "axios";
 
 export const uploadImage = async (
   imageData: FormData,
