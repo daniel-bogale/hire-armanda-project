@@ -10,42 +10,41 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
-import { login } from "@/services/authService"
 import { setError } from "@/state"
-import { AuthResponse } from "@/types/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { z } from "zod"
 
 export const description =
     "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account."
-const loginFormSchema = z.object({
+const formSchema = z.object({
     email: z
         .string()
-        .email("Please enter a valid email address."),
-    password: z
-        .string()
-        .min(8, "Password must be at least 8 characters long.")
+        .email("Please enter a valid email address.")
 })
 
-type LoginFormInputs = z.infer<typeof loginFormSchema>;
+type fromInputs = z.infer<typeof formSchema>;
 
 
-export function LoginForm() {
-    const form = useForm<z.infer<typeof loginFormSchema>>({
-        resolver: zodResolver(loginFormSchema),
+export function ForgotPassword() {
+    let { state } = useLocation();
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
-            password: ""
+            email: state?.email || "",
         },
     })
+
     const { toast } = useToast()
 
-    const onSubmit = async (data: LoginFormInputs) => {
+    const onSubmit = async (data: fromInputs) => {
         try {
-            const response: AuthResponse = await login(data);
-            localStorage.setItem('token', response.token);
+            // const response: AuthResponse = await login(data);
+            // localStorage.setItem('token', response.token);
+            console.log(data, "data")
+            throw new Error("");
         } catch (err) {
             setError('Login failed, please try again.');
             toast({
@@ -60,9 +59,9 @@ export function LoginForm() {
         <div className={`flex items-center justify-center min-h-[85.4vh] `}>
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                    <CardTitle className="text-2xl">Login</CardTitle>
+                    <CardTitle className="text-2xl">Forgot your password?</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account
+                        Enter your email address and we'll send you a link to reset your password.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -82,39 +81,14 @@ export function LoginForm() {
                                 )}
                             />
 
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="flex justify-between items-center">Password
-                                            <Link to="#" className="ml-auto inline-block text-sm underline text-gray-900 dark:text-white">
-                                                Forgot your password?
-                                            </Link>
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="" {...field} type="password" />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-
-                                )}
-                            />
-
-                            <Button type="submit" className="w-full">Login</Button>
-                            <Button variant="outline" className="w-full">
-                                Login with Google
-                            </Button>
-
-
+                            <Button type="submit" className="w-full">Reset Password</Button>
                         </form>
                     </Form>
 
 
                     <div className="mt-4 text-center text-sm">
-                        Don&apos;t have an account?{" "}
-                        <Link to="/register" className="underline">
-                            Sign up
+                        <Link to="/login" className="underline">
+                            Back to login
                         </Link>
                     </div>
                 </CardContent>

@@ -7,12 +7,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from './routes/error/ErrorPage.tsx';
-import { LoginForm } from './routes/auth/LoginForm.tsx';
-import { SignUpForm } from './routes/auth/SignUpForm.tsx';
+import { LoginForm } from './routes/auth/login.tsx';
+import { SignUpForm } from './routes/auth/register.tsx';
 import { ThemeProvider } from './components/theme-provider.tsx';
 import LandingPage from './routes/landing-page/index.tsx';
 import DefaultLayout from './components/default-layout.tsx';
 import PublicView from './routes/PublicView.tsx';
+import { ForgotPassword } from './routes/auth/forgot-password.tsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
               {
                 path: "/register",
                 element: <SignUpForm />
+              },
+              {
+                path: "/forgot-password",
+                element: <ForgotPassword />
+
               }
 
             ]
