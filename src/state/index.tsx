@@ -68,7 +68,6 @@ export const setUser = (user: User | null): SetUserAction => ({
 const AppContext = createContext<{
     dispatch: React.Dispatch<Action>;
     state: AppState;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }>({ state: initialState, dispatch: (_value) => ({}) });
 
 export const AppStateProvider = ({ children }: PropsWithChildren) => {

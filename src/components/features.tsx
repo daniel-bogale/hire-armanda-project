@@ -1,4 +1,3 @@
-// src/components/Features.tsx
 const Features = () => {
     const features = [
         { title: "Secure Image Upload", description: "Easily upload and store your images securely in the cloud." },

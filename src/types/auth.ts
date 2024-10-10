@@ -1,6 +1,7 @@
 // src/types/auth.ts
 export interface UserData {
-  username: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 }
