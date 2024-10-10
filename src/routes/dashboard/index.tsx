@@ -12,12 +12,34 @@ import { useState } from "react"
 type Props = {}
 
 const MainDashboard = ({ }: Props) => {
-    const [content, setContent] = useState("Admin Page")
+    const [path, setContent] = useState("Admin Page")
 
-    return (
-        <div className=" flex gap-4 py-10 px-4">
+    return (<>
+        <div className=" gap-4 py-10 px-4 hidden md:flex">
             <ResizablePanelGroup
                 direction="horizontal"
+                className="min-h-[76vh] rounded-lg border mx-8"
+
+            >
+                <ResizablePanel defaultSize={25} >
+                    <Tree
+                        data={data}
+                        className="flex-shrink-0 border-[1px] h-full p-4"
+                        initialSlelectedItemId="f12"
+                        onSelectChange={(item) => setContent(item?.path ?? "")}
+                        folderIcon={Folder}
+                        itemIcon={Folder}
+                    />
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={80} minSize={70} maxSize={85}>
+                    <MainMedia path={path} />
+                </ResizablePanel>
+            </ResizablePanelGroup>
+        </div >
+        <div className=" gap-4 py-10 px-4 flex md:hidden">
+            <ResizablePanelGroup
+                direction="vertical"
                 className="min-h-[76vh] rounded-lg border mx-8"
             >
                 <ResizablePanel defaultSize={25}>
@@ -25,17 +47,21 @@ const MainDashboard = ({ }: Props) => {
                         data={data}
                         className="flex-shrink-0 border-[1px] h-full p-4"
                         initialSlelectedItemId="f12"
-                        onSelectChange={(item) => setContent(item?.name ?? "")}
+                        onSelectChange={(item) => setContent(item?.path ?? "")}
                         folderIcon={Folder}
                         itemIcon={Folder}
                     />
                 </ResizablePanel>
-                <ResizableHandle />
-                <ResizablePanel defaultSize={80} minSize={75} maxSize={85}>
-                    <MainMedia content={content} />
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={80} minSize={60} maxSize={85}>
+                    <MainMedia path={path} />
                 </ResizablePanel>
             </ResizablePanelGroup>
-        </div >
+
+
+
+        </div>
+    </>
     )
 }
 

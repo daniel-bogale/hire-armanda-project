@@ -1,6 +1,6 @@
 import React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronRight, FolderIcon, type LucideIcon } from "lucide-react";
+import { ChevronRight, FolderArchive, type LucideIcon } from "lucide-react";
 import useResizeObserver from "use-resize-observer";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ interface TreeDataItem {
     name: string;
     icon?: LucideIcon,
     children?: TreeDataItem[];
+    path: string;
 }
 
 type TreeProps =
@@ -74,13 +75,12 @@ const Tree = React.forwardRef<
 
     return (
         <div ref={refRoot} className={cn("overflow-hidden", className)}>
-            <div className="flex items-end ">
-                <FolderIcon h-5 w-5 />
-                <p className="px-2 font-bold" >Media Library</p>
-                <ChevronRight className="h-5 w-5 " />
-            </div>
             <ScrollArea style={{ width, height }}>
                 <div className="relative p-2">
+                    <div className="flex items-end overflow-ellipsis min-w-max mb-3">
+                        <FolderArchive h-5 w-5 />
+                        <p className="px-2 font-bold" >Media Library</p>
+                    </div>
                     <TreeItem
                         data={data}
                         ref={ref}

@@ -7,7 +7,7 @@ type Props = {}
 const MainDashboardLayout = ({ }: Props) => {
     return (
         <div className="relative">
-            <div className="min-h-[92vh] pl-14 md:pl-0">
+            <div className="min-h-[92.2vh] pl-8 md:pl-0">
                 <MainHeader />
                 <Outlet />
             </div>

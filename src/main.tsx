@@ -88,10 +88,8 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TooltipProvider>
-
         <RouterProvider router={router} />
       </TooltipProvider>
-
     </ThemeProvider>
   </StrictMode>,
 )

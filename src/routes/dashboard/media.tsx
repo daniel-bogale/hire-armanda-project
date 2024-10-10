@@ -5,35 +5,36 @@ import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 
 type Props = {
-    content: string
+    path: string
 }
 
-const MainMedia = ({ content }: Props) => {
+const MainMedia = ({ path }: Props) => {
+    const folders = path.split('/')
+    console.log(path)
+
     return (
         <div className='p-8'>
             <div className='flex justify-between items-center'>
-
                 <Breadcrumb className="hidden md:flex ">
                     <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="/dashboard">Dashboard</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbLink asChild>
-                                <Link to="#">Folder 1</Link>
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Folder b</BreadcrumbPage>
-                        </BreadcrumbItem>
+                        {
+                            folders.map((val, idx) => (
+                                <BreadcrumbItem>
+                                    {<>
+                                        {idx < folders.length ? <BreadcrumbLink asChild>
+                                            <Link to={val}>{val}</Link>
+                                        </BreadcrumbLink> : <BreadcrumbPage>Folder b</BreadcrumbPage>}
+                                        {idx < folders.length - 1 && <BreadcrumbSeparator />}
+
+                                    </>
+                                    }
+                                </BreadcrumbItem>
+                            ))
+                        }
                     </BreadcrumbList>
                 </Breadcrumb>
 
-                <div className="relative ml-auto flex-1 sm:grow-0">
+                <div className="relative ml-auto flex-1 md:grow-0">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="search"
@@ -42,7 +43,6 @@ const MainMedia = ({ content }: Props) => {
                     />
                 </div>
             </div>
-            <p>{content}</p>
             <div className="flex flex-col items-center gap-1 text-center py-40">
                 <h3 className="text-2xl font-bold tracking-tight">
                     You have no folder or image
