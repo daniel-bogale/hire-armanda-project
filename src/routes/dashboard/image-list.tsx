@@ -57,7 +57,7 @@ const ImageList = ({
                             <TableBody>
                                 {
                                     folderImages.map((data) => (
-                                        <TableRow>
+                                        <TableRow key={data.id}>
                                             <TableCell className="hidden sm:table-cell">
                                                 <img
                                                     alt="Product image"
@@ -78,7 +78,7 @@ const ImageList = ({
                                             </TableCell>
                                             <TableCell className="flex items-center flex-wrap max-w-44">
                                                 {
-                                                    data.tags.map((tag) => (<Badge variant="outline">{tag}</Badge>))
+                                                    data.tags.map((tag, idx) => (<Badge key={idx} variant="outline">{tag}</Badge>))
                                                 }
                                             </TableCell>
 

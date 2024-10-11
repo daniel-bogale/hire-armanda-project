@@ -10,8 +10,9 @@ import {
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
-import { register } from "@/services/authService"
+import { login, register } from "@/services/authService"
 import { setError, setUser, useAppState, User } from "@/state"
+import { AuthResponse } from "@/types/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -59,9 +60,12 @@ export function RegisterPage() {
     const onSubmit = async (data: signUpFormInputs) => {
         try {
             const response: User = await register(data);
+            const loginResponse: AuthResponse = await login({ userName: response.username, password: data.password });
             dispatch(setError(null));
-            console.log("response from user registration:", response);
             dispatch(setUser(response));
+            localStorage.setItem('token', loginResponse.token.access_token);
+            localStorage.setItem('user', JSON.stringify(response)); // Store user data
+
             navigate("/dashboard");
         } catch (err) {
             setError('Login failed, please try again.');
@@ -70,9 +74,10 @@ export function RegisterPage() {
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
                 description: errorMessage,
-            })
+            });
         }
     };
+
 
     return (
         <div className={`flex items-center justify-center min-h-[85vh] `}>

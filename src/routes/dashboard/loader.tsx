@@ -6,5 +6,5 @@ export const mainLoader = async ({ }: LoaderFunctionArgs) => {
 
     return {
         folders
-    };
+    }
 };

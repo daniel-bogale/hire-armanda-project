@@ -1,11 +1,12 @@
+import { User } from "@/state";
+
 // src/types/api.ts
 export interface AuthResponse {
-  token: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
+  token: {
+    access_token: string;
+    token_type: string;
   };
+  user: User;
 }
 
 export interface ImageUploadResponse {

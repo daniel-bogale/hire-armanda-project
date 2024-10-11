@@ -79,7 +79,7 @@ const Tree = React.forwardRef<
             <ScrollArea style={{ width, height }}>
                 <div className="relative p-2">
                     <div className="flex items-end overflow-ellipsis min-w-max mb-3">
-                        <FolderArchive h-5 w-5 />
+                        <FolderArchive className="h-5 w-5" />
                         <p className="px-2 font-bold" >Media Library</p>
                     </div>
                     <TreeItem

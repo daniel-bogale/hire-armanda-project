@@ -8,11 +8,18 @@ import { Tree } from "@/components/tree/tree"
 import { data } from "./data"
 import { Folder } from "lucide-react"
 import { useState } from "react"
+import { FolderResponse } from "@/services/folderService"
+import { useLoaderData } from "react-router-dom"
 
 type Props = {}
 
 const MainDashboard = ({ }: Props) => {
     const [path, setContent] = useState("Admin Page")
+    const { folders } = useLoaderData() as {
+        folders: FolderResponse[]
+    }
+    console.log("folders", folders)
+
 
     return (<>
         <div className=" gap-4 py-10 px-4 hidden md:flex">

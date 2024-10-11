@@ -14,6 +14,8 @@ const MainHeader = () => {
         console.log("logging out");
         try {
             dispatch(setUser(null));
+            localStorage.removeItem('token');
+            localStorage.removeItem("user")
         }
         catch (err) {
             toast({
@@ -112,7 +114,7 @@ const MainHeader = () => {
                 </div>
                 <nav className='hidden items-center gap-4 sm:flex'>
                     <Link to="/login" onClick={handleLogout}>
-                        <Button variant="link" className=" text-gray-900 dark:text-gray-300">Log out</Button>
+                        <Button variant="link" className="text-muted-foreground text-gray-900 dark:text-gray-300">Log out</Button>
                     </Link>
                     <ModeToggle />
 

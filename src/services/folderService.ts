@@ -49,7 +49,7 @@ export const getFolders = async (
         params: { skip, limit },
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );

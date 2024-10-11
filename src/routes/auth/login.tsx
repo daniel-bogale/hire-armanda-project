@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { login } from "@/services/authService"
-import { setError } from "@/state"
+import { setError, setUser, useAppState } from "@/state"
 import { AuthResponse } from "@/types/api"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
@@ -34,6 +34,7 @@ export type LoginFormInputs = z.infer<typeof loginFormSchema>;
 
 
 export function LoginPage() {
+    const { dispatch } = useAppState()
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
@@ -46,7 +47,10 @@ export function LoginPage() {
     const onSubmit = async (data: LoginFormInputs) => {
         try {
             const response: AuthResponse = await login(data);
-            localStorage.setItem('token', response.token);
+            localStorage.setItem('token', response.token.access_token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            dispatch(setUser(response.user))
+
         } catch (err) {
             setError('Login failed, please try again.');
             toast({

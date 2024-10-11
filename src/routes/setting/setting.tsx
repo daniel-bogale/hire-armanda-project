@@ -21,6 +21,8 @@ const Setting = ({ }: Props) => {
     console.log("logging out");
     try {
       dispatch(setUser(null));
+      localStorage.removeItem('token');
+      localStorage.removeItem("user")
     }
     catch (err) {
       toast({

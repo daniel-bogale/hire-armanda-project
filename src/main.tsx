@@ -21,6 +21,7 @@ import { TooltipProvider } from './components/ui/tooltip.tsx';
 import Setting from './routes/setting/setting.tsx';
 import About from './routes/about.tsx';
 import { AppStateProvider } from './state/index.tsx';
+import { mainLoader } from './routes/dashboard/loader.tsx';
 
 const router = createBrowserRouter([
   {
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
                   {
                     path: "/dashboard",
                     element: <MainDashboard />,
-                    // loader: mainLoader
+                    loader: mainLoader
                   },
                   {
                     path: '/setting',

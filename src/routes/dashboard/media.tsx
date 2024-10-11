@@ -4,16 +4,12 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Link } from "react-router-dom"
 import { ImageDialog } from '../Image/modal'
 import ImageList from './image-list'
-// import { FolderResponse } from '@/services/folderService'
 
 type Props = {
     path: string
 }
 
 const MainMedia = ({ path }: Props) => {
-    // const { folder } = useLoaderData() as {
-    //     folder: FolderResponse
-    // }
     const folders = path.split('/')
     const folderId = folders?.[0] ?? ""
 
@@ -24,7 +20,7 @@ const MainMedia = ({ path }: Props) => {
                     <BreadcrumbList>
                         {
                             folders.map((val, idx) => (
-                                <BreadcrumbItem>
+                                <BreadcrumbItem key={val}>
                                     {<>
                                         {idx < folders.length ? <BreadcrumbLink asChild>
                                             <Link to={val}>{val}</Link>
