@@ -44,7 +44,7 @@ const About = () => {
                 <li className="leading-7 [&:not(:first-child)]:mt-6">
                     Source Code:{" "}
                     <a
-                        href="/https://github.com/daniel-bogale"
+                        href="https://github.com/daniel-bogale"
                         className="font-medium text-primary underline underline-offset-4"
                         target="_blank"
 

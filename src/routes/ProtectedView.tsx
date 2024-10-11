@@ -4,13 +4,14 @@ import { Outlet, useLocation, Navigate } from 'react-router-dom';
 
 function ProtectedView() {
     const {
-        dispatch
+        dispatch,
+        state: { user },
     } = useAppState();
 
     const storedUser = localStorage.getItem('user');
     const parsedUser = storedUser ? JSON.parse(storedUser) : null;
 
-    const currentUser = parsedUser;
+    const currentUser = user || parsedUser;
 
     const { pathname: redirect, search: query } = useLocation();
     const url = `${redirect}${query}`;

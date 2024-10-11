@@ -10,9 +10,13 @@ interface Folder {
 export interface FolderResponse extends Folder {
   id: number;
   user_id: number;
-  sub_folders: Folder[];
+  sub_folders: FolderResponse[];
   created_at: string;
   updated_at: string;
+}
+export interface FolderWithPath extends FolderResponse {
+  path: string;
+  sub_folders: FolderWithPath[];
 }
 
 const handleApiError = (error: any, action: string) => {
@@ -27,10 +31,23 @@ export const createFolder = async (
   folderData: Folder
 ): Promise<FolderResponse> => {
   try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("Authentication token is missing.");
+    }
+
     const response = await axios.post<FolderResponse>(
       `${API_URL}/api/folders`,
-      folderData
+      folderData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Use the token variable directly
+        },
+      }
     );
+
     return response.data;
   } catch (error) {
     handleApiError(error, "folder creation");

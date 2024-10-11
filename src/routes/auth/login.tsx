@@ -23,8 +23,7 @@ export const description =
     "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account."
 const loginFormSchema = z.object({
     userName: z
-        .string()
-        .min(3, "Username must be at least 3 characters long."),
+        .string().email("Please enter a valid email address."),
     password: z
         .string()
         .min(8, "Password must be at least 8 characters long.")
@@ -67,7 +66,7 @@ export function LoginPage() {
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
-                        Enter your user name and password below to login to your account
+                        Enter your Email and password below to login to your account
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -78,10 +77,10 @@ export function LoginPage() {
                                 name="userName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="flex justify-between items-center">User name
+                                        <FormLabel className="flex justify-between items-center">Email
                                         </FormLabel>
                                         <FormControl>
-                                            <Input placeholder="" {...field} type="userName" />
+                                            <Input placeholder="x@gmail.com" {...field} type="userName" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

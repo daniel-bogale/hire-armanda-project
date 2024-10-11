@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
+import { createFolder } from "@/services/folderService"
 import { setError } from "@/state"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -17,10 +19,10 @@ export type fromInputs = z.infer<typeof formSchema>;
 
 interface Props {
     folderName?: string
-    path: string
+    parentFolderId: number
 }
 
-export function FolderForm({ folderName }: Props) {
+export function FolderForm({ folderName, parentFolderId }: Props) {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -33,9 +35,12 @@ export function FolderForm({ folderName }: Props) {
 
     const onSubmit = async (data: fromInputs) => {
         try {
-            // const response: AuthResponse = await login(data);
-            // localStorage.setItem('token', response.token);
-            console.log(data, "data")
+            const response = await createFolder({
+                name: data.name,
+                description: "place holder",
+                folder_id: parentFolderId
+            });
+            console.log(response, "data")
             throw new Error("");
         } catch (err) {
             setError('Login failed, please try again.');
@@ -66,7 +71,15 @@ export function FolderForm({ folderName }: Props) {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="w-full">{folderName ? "Update" : "Create"}</Button>
+                        <Button type="submit" className="w-full" disabled={
+                            form.formState.isLoading
+                        } >{
+                                form.formState.isSubmitting ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Please wait
+                                    </>
+                                ) : folderName ? "Update" : "Create"}</Button>
                     </form>
                 </Form>
             </div>

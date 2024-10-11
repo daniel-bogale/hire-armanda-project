@@ -4,10 +4,9 @@ import { FolderForm } from "./folder-form"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 
 interface Props {
-    // folderId: string
-    path: string
+    parentFolderId: number
 }
-export function FolderDialog({ path }: Props) {
+export function FolderDialog({ parentFolderId }: Props) {
 
     return (
         <Dialog>
@@ -17,7 +16,7 @@ export function FolderDialog({ path }: Props) {
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <FolderForm path={path} />
+                <FolderForm parentFolderId={parentFolderId} />
             </DialogContent>
         </Dialog>
 
