@@ -1,21 +1,18 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { setUser, useAppState } from '@/state';
-import { logout } from '@/services/authService';
 import { useToast } from '@/hooks/use-toast';
 import { Images, Package2, ScrollText, Settings } from 'lucide-react';
 import { ModeToggle } from '../mode-toggle';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 const MainHeader = () => {
-    const { dispatch } = useAppState();
+    const { dispatch, state: { user } } = useAppState();
     const { toast } = useToast()
 
     const handleLogout = async () => {
         console.log("logging out");
         try {
-
-            await logout();
             dispatch(setUser(null));
         }
         catch (err) {
@@ -113,30 +110,33 @@ const MainHeader = () => {
                         </nav>
                     </aside>
                 </div>
-                <nav className='hidden content-center gap-4 sm:flex'>
+                <nav className='hidden items-center gap-4 sm:flex'>
                     <Link to="/login" onClick={handleLogout}>
                         <Button variant="link" className=" text-gray-900 dark:text-gray-300">Log out</Button>
                     </Link>
                     <ModeToggle />
+
+
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
+
                             <Button
                                 variant="outline"
-                                size="icon"
-                                className="overflow-hidden rounded-full"
                             >
-                                <img
-                                    src="/placeholder-user.jpg"
-                                    width={36}
-                                    height={36}
-                                    alt="Avatar"
-                                    className="overflow-hidden rounded-full"
-                                />
+                                <p>{user?.username}</p>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={
+                                    () => user?.username && navigator.clipboard.writeText(user.username)
+                                }>Copy UserName
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+
+
                             <DropdownMenuItem
                                 onClick={
                                     () => navigate('/setting')

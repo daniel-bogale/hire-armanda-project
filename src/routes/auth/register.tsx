@@ -11,11 +11,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/use-toast"
 import { register } from "@/services/authService"
-import { setError } from "@/state"
-import { AuthResponse } from "@/types/api"
+import { setError, setUser, useAppState, User } from "@/state"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 export const description =
@@ -40,31 +40,42 @@ export type signUpFormInputs = z.infer<typeof signUpFormSchema>;
 
 
 export function RegisterPage() {
+    const { dispatch
+
+    } = useAppState();
+    const navigate = useNavigate()
+
     const form = useForm<z.infer<typeof signUpFormSchema>>({
         resolver: zodResolver(signUpFormSchema),
         defaultValues: {
             email: "",
-            password: ""
+            password: "",
+            firstName: "",
+            lastName: "",
         },
     })
     const { toast } = useToast()
 
     const onSubmit = async (data: signUpFormInputs) => {
         try {
-            const response: AuthResponse = await register(data);
-            localStorage.setItem('token', response.token);
+            const response: User = await register(data);
+            dispatch(setError(null));
+            console.log("response from user registration:", response);
+            dispatch(setUser(response));
+            navigate("/dashboard");
         } catch (err) {
             setError('Login failed, please try again.');
+            const errorMessage = (err as any)?.response?.data?.detail ?? "There was a problem with your request.";
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong.",
-                description: "There was a problem with your request.",
+                description: errorMessage,
             })
         }
     };
 
     return (
-        <div className={`flex items-center justify-center min-h-[85.4vh] `}>
+        <div className={`flex items-center justify-center min-h-[85vh] `}>
 
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
@@ -143,11 +154,16 @@ export function RegisterPage() {
                                 )}
                             />
 
-                            <Button type="submit" className="w-full">
-                                Create an account
-                            </Button>
-                            <Button variant="outline" className="w-full">
-                                Sign up with Gmail
+                            <Button type="submit" className="w-full"
+                                disabled={form.formState.isSubmitting}
+                            >
+                                {form.formState.isSubmitting ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Please wait
+                                    </>
+                                ) :
+                                    "Create an account"}
                             </Button>
 
                         </form>

@@ -4,16 +4,18 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Link } from "react-router-dom"
 import { ImageDialog } from '../Image/modal'
 import ImageList from './image-list'
+// import { FolderResponse } from '@/services/folderService'
 
 type Props = {
     path: string
 }
-const data = [
-    "https://refine-web.imgix.net/blog/2024-03-19-ts-shadcn/social.png?w=1788", "https://user-images.githubusercontent.com/17372417/235653077-fc1a8e77-35b5-4066-a3c1-ab30dd96a3ac.png"
-]
+
 const MainMedia = ({ path }: Props) => {
+    // const { folder } = useLoaderData() as {
+    //     folder: FolderResponse
+    // }
     const folders = path.split('/')
-    console.log(path)
+    const folderId = folders?.[0] ?? ""
 
     return (
         <div className='p-8 gap-y-4 grid'>
@@ -48,24 +50,12 @@ const MainMedia = ({ path }: Props) => {
                         />
 
                     </div>
-                    <ImageDialog path={path} />
+                    <ImageDialog folderId={folderId} />
                 </div>
             </div>
-            {data.length > 0 ?
-                <ImageList />
-                :
-
-                <div className="flex flex-col items-center gap-1 text-center py-40">
-                    <h3 className="text-2xl font-bold tracking-tight">
-                        You have no image in this folder
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                        You can start by adding image
-                    </p>
-                    <ImageDialog path={path} size='large' />
-                </div>
+            {folderId &&
+                <ImageList folderId={folderId} />
             }
-
         </div>
     )
 }

@@ -5,12 +5,15 @@ import {
     useReducer,
 } from 'react';
 
-interface User {
-    id: string;          // Unique identifier for the user
-    username: string;    // Username of the user
-    email: string;       // Email address of the user
-    createdAt: Date;     // Date when the user was created
-    updatedAt: Date;     // Date when the user was last updated
+export interface User {
+
+    created_at: string;
+    email: string
+    first_name: string
+    id: number
+    last_name: string
+    updated_at: string
+    username: string
 }
 
 interface AppState {

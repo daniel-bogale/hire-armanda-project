@@ -20,6 +20,7 @@ import DefaultLayout from './components/layout/default-layout.tsx';
 import { TooltipProvider } from './components/ui/tooltip.tsx';
 import Setting from './routes/setting/setting.tsx';
 import About from './routes/about.tsx';
+import { AppStateProvider } from './state/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -63,7 +64,8 @@ const router = createBrowserRouter([
                 children: [
                   {
                     path: "/dashboard",
-                    element: <MainDashboard />
+                    element: <MainDashboard />,
+                    // loader: mainLoader
                   },
                   {
                     path: '/setting',
@@ -88,7 +90,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <TooltipProvider>
-        <RouterProvider router={router} />
+        <AppStateProvider>
+          <RouterProvider router={router} />
+        </AppStateProvider>
       </TooltipProvider>
     </ThemeProvider>
   </StrictMode>,

@@ -14,6 +14,7 @@ import { login } from "@/services/authService"
 import { setError } from "@/state"
 import { AuthResponse } from "@/types/api"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
 import { z } from "zod"
@@ -21,22 +22,22 @@ import { z } from "zod"
 export const description =
     "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account."
 const loginFormSchema = z.object({
-    email: z
+    userName: z
         .string()
-        .email("Please enter a valid email address."),
+        .min(3, "Username must be at least 3 characters long."),
     password: z
         .string()
         .min(8, "Password must be at least 8 characters long.")
 })
 
-type LoginFormInputs = z.infer<typeof loginFormSchema>;
+export type LoginFormInputs = z.infer<typeof loginFormSchema>;
 
 
 export function LoginPage() {
     const form = useForm<z.infer<typeof loginFormSchema>>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
-            email: "",
+            userName: "",
             password: ""
         },
     })
@@ -57,12 +58,12 @@ export function LoginPage() {
     };
 
     return (
-        <div className={`flex items-center justify-center min-h-[85.4vh] `}>
+        <div className={`flex items-center justify-center min-h-[84.9vh] `}>
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
                     <CardTitle className="text-2xl">Login</CardTitle>
                     <CardDescription>
-                        Enter your email below to login to your account
+                        Enter your user name and password below to login to your account
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -70,15 +71,17 @@ export function LoginPage() {
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                             <FormField
                                 control={form.control}
-                                name="email"
+                                name="userName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Email</FormLabel>
+                                        <FormLabel className="flex justify-between items-center">User name
+                                        </FormLabel>
                                         <FormControl>
-                                            <Input placeholder="x@example.com" {...field} />
+                                            <Input placeholder="" {...field} type="userName" />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
+
                                 )}
                             />
 
@@ -90,9 +93,7 @@ export function LoginPage() {
                                         <FormLabel className="flex justify-between items-center">Password
                                             <Link
                                                 to="/forgot-password"
-                                                state={{
-                                                    email: form.getValues('email'),
-                                                }} className="ml-auto inline-block text-sm underline text-gray-900 dark:text-white">
+                                                className="ml-auto inline-block text-sm underline text-gray-900 dark:text-white">
                                                 Forgot your password?
                                             </Link>
                                         </FormLabel>
@@ -104,13 +105,17 @@ export function LoginPage() {
 
                                 )}
                             />
-
-                            <Button type="submit" className="w-full">Login</Button>
-                            <Button variant="outline" className="w-full">
-                                Login with Google
+                            <Button type="submit" className="w-full"
+                                disabled={form.formState.isSubmitting}
+                            >
+                                {form.formState.isSubmitting ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Please wait
+                                    </>
+                                ) :
+                                    "Login"}
                             </Button>
-
-
                         </form>
                     </Form>
 

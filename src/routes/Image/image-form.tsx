@@ -24,7 +24,7 @@ const formSchema = z.object({
 export type fromInputs = z.infer<typeof formSchema>;
 
 interface Props {
-    path: string
+    folderId: string
 }
 
 const fileToBase64 = (file: File): Promise<string> => {
@@ -36,7 +36,7 @@ const fileToBase64 = (file: File): Promise<string> => {
     });
 };
 
-export function ImageForm({ path }: Props) {
+export function ImageForm({ folderId }: Props) {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -54,7 +54,7 @@ export function ImageForm({ path }: Props) {
             if (!data.file) return
             const base64File = await fileToBase64(data.file);
 
-            console.log("data", { image: base64File, path })
+            console.log("data", { image: base64File, folderId })
             throw new Error("");
         } catch (err) {
             setError('Login failed, please try again.');

@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 import { setError } from "@/state"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Link, useLocation } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { z } from "zod"
 
 export const description =
@@ -28,12 +28,11 @@ export type fromInputs = z.infer<typeof formSchema>;
 
 
 export function ForgotPassword() {
-    let { state } = useLocation();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: state?.email || "",
+            email: "",
         },
     })
 

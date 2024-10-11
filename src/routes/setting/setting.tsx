@@ -3,22 +3,23 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { deleteAccount, logout } from "@/services/authService"
 import { setUser, useAppState } from "@/state"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { DeleteAccountDialog } from "../auth/delete-modal"
+import { deleteUser } from "@/services/userService"
 
 interface Props {
 
 }
 
 const Setting = ({ }: Props) => {
-  const { dispatch } = useAppState();
+  const { dispatch, state } = useAppState();
   const { toast } = useToast()
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     console.log("logging out");
     try {
-      await logout();
       dispatch(setUser(null));
     }
     catch (err) {
@@ -32,7 +33,10 @@ const Setting = ({ }: Props) => {
   const handleDeleteAccount = async () => {
     console.log("deleting");
     try {
-      await deleteAccount();
+      if (!state.user?.id) return;
+      await deleteUser(
+        state.user.id
+      );
       dispatch(setUser(null));
     }
     catch (err) {
@@ -62,9 +66,10 @@ const Setting = ({ }: Props) => {
               <Button variant="link" className="text-gray-900 dark:text-gray-300 w-full">Log out</Button>
             </Link>
             <ModeToggle variant="horizontal" />
-            <Link to="/" onClick={handleDeleteAccount} >
-              <Button variant="destructive" className="text-gray-900 dark:text-gray-300 w-full ">Delete Account</Button>
-            </Link>
+            <DeleteAccountDialog onContine={() => {
+              handleDeleteAccount()
+              navigate("/")
+            }} />
           </div>
         </CardContent>
       </Card>

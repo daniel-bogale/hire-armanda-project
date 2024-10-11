@@ -4,10 +4,10 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { ImageForm } from "./image-form"
 
 interface Props {
-    path: string
+    folderId: string
     size?: "large"
 }
-export function ImageDialog({ path, size }: Props) {
+export function ImageDialog({ folderId, size }: Props) {
     return (
         <Dialog >
             <DialogTrigger asChild >
@@ -20,10 +20,9 @@ export function ImageDialog({ path, size }: Props) {
                             </span>
                         </Button>
                 }
-
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <ImageForm path={path} />
+                <ImageForm folderId={folderId} />
             </DialogContent>
         </Dialog>
 

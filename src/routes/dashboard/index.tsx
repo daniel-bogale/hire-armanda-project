@@ -19,7 +19,6 @@ const MainDashboard = ({ }: Props) => {
             <ResizablePanelGroup
                 direction="horizontal"
                 className="min-h-[76vh] rounded-lg border mx-8"
-
             >
                 <ResizablePanel defaultSize={25} >
                     <Tree

@@ -26,6 +26,7 @@ const About = () => {
                     <a
                         href="https://app.eraser.io/workspace/SdtWMBHiGbBK9udsdUPR"
                         className="font-medium text-primary underline underline-offset-4"
+                        target="_blank"
                     >
                         eraser.io
                     </a>
@@ -33,8 +34,9 @@ const About = () => {
                 <li className="leading-7 [&:not(:first-child)]:mt-6">
                     Backend Doc:{" "}
                     <a
-                        href="/"
+                        href="https://hire-armanda-project-backend.onrender.com/docs#/"
                         className="font-medium text-primary underline underline-offset-4"
+                        target="_blank"
                     >
                         swagger
                     </a>
@@ -44,6 +46,8 @@ const About = () => {
                     <a
                         href="/https://github.com/daniel-bogale"
                         className="font-medium text-primary underline underline-offset-4"
+                        target="_blank"
+
                     >
                         My Github
                     </a>
